@@ -1,14 +1,16 @@
 from dotenv import load_dotenv, find_dotenv
-
-from classes.database import Database
+from classes.lotteries.lotofacil import Lotofacil
 from classes.utils import Utils
-from models.base import TableBase
+
+load_dotenv(find_dotenv())
+Utils.load_config()
+
+
+def lotofacil():
+	loto = Lotofacil()
+	loto.crawl()
+	return Utils.freq([x.balls for x in loto.select().contests])
+
 
 if __name__ == "__main__":
-    load_dotenv(find_dotenv())
-
-    Utils.load_config()
-    lotofacil = TableBase(
-        name="lotofacil"
-    )
-    Database().create_table(lotofacil)
+	print(lotofacil())

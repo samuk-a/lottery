@@ -1,5 +1,6 @@
 import os
 from json import loads
+from typing import List
 
 
 class Utils:
@@ -25,3 +26,11 @@ class Utils:
             if type(value) == dict:
                 k = f"{key}.{k}"
             cls._jsonize(k, v)
+
+    @staticmethod
+    def freq(values: List[list]) -> dict:
+        dicio = {}
+        for row in values:
+            for val in row:
+                dicio.update({val: dicio.get(val, 0) + 1})
+        return dict(sorted(dicio.items(), key=lambda item: item[1], reverse=True))
